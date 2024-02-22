@@ -34,6 +34,13 @@ const ThoughtSchema = new mongoose.Schema({
             default: Date.now,
         },
     }],
+    virtuals: {
+        reactionCount: {
+            get() {
+                return this.reactions.length;
+            }
+        }
+    }
 });
 
 const Thought = mongoose.model('Thought', ThoughtSchema);
