@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+const { Schema, model, Types } = require('mongoose');
 
-const ThoughtSchema = new mongoose.Schema({
+const ThoughtSchema = new Schema({
     throughText: {
         type: String,
         required: true,
@@ -17,8 +17,8 @@ const ThoughtSchema = new mongoose.Schema({
     },
     reactions: [{
         reactionId: {
-            type: mongoose.Schema.Types.ObjectId,
-            default: new mongoose.Types.ObjectId,
+            type: Types.ObjectId,
+            default: new Types.ObjectId,
         },
         reactionBody: {
             type: String,
@@ -33,16 +33,13 @@ const ThoughtSchema = new mongoose.Schema({
             type: Date,
             default: Date.now,
         },
-    }],
-    virtuals: {
-        reactionCount: {
-            get() {
-                return this.reactions.length;
-            }
-        }
-    }
+    }]
 });
 
-const Thought = mongoose.model('Thought', ThoughtSchema);
+ThoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+});
+
+const Thought = model('Thought', ThoughtSchema);
 
 module.exports = Thought;
