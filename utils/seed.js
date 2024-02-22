@@ -26,10 +26,10 @@ const seedDatabase = async () => {
     await User.findByIdAndUpdate(users[0]._id, { $push: { friends: users[1]._id } });
     await User.findByIdAndUpdate(users[1]._id, { $push: { friends: users[0]._id } });
     
-    // Create thoughts
+    // Create thoughts with reactions
     const thoughts = await Thought.create([
-      { thoughtText: 'Thought 1', username: 'user1', userId: users[0]._id },
-      { thoughtText: 'Thought 2', username: 'user2', userId: users[1]._id },
+      { thoughtText: 'Thought 1', username: 'user1', reactions: [{ reactionBody: 'Reaction 1', username: 'user2' }], userId: users[0]._id },
+      { thoughtText: 'Thought 2', username: 'user2', reactions: [{ reactionBody: 'Reaction 2', username: 'user1' }], userId: users[1]._id },
     ]);
 
     // Add thoughts to users
